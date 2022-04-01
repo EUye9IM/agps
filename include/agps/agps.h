@@ -15,33 +15,46 @@ class Argument {
 public:
 	Argument();
 	Argument(Argument *next_argument, Type type, char short_name,
-			 const char *long_name, bool is_necessary, Value default_value,
-			 bool (*check_func)(Value));
-	~Argument();
+			 const char *long_name, const char *infomation, bool is_necessary,
+			 const Value &default_value, bool (*check_func)(const Value &),
+			 bool is_exist, const Value &real_valuel);
+	void set(Argument *next_argument, Type type, char short_name,
+			 const char *long_name, const char *infomation, bool is_necessary,
+			 const Value &default_value, bool (*check_func)(const Value &),
+			 bool is_exist, const Value &real_valuel);
 	Type type;
 	char short_name;
 	ConstStr long_name;
+	ConstStr infomation;
 	bool is_necessary;
 	Value default_valuel;
-	bool (*check_func)(Value);
+	bool (*check_func)(const Value &);
 	Argument *next_argument;
+
+	bool is_exist;
+	Value real_valuel;
 };
 class Parser {
 public:
 	Parser();
 	~Parser();
 	void add(Type type, char short_name, const char *long_name,
-			 bool is_necessary = true, Value default_value = Value{0},
-			 bool (*check_func)(Value) = nullptr);
+			 const char *infomation, bool is_necessary = true,
+			 const Value &default_value = Value{0},
+			 bool (*check_func)(const Value &) = nullptr);
 	void parse(int srgc, const char **argv);
-	bool success();
-	Value get(char short_name);
-	Value get(const char *long_name);
-	void clear();
+	bool success() const;
+	Value get(char short_name) const;
+	Value get(const char *long_name) const;
+	bool is_exist(char short_name) const;
+	bool is_exist(const char *long_name) const;
+	void reset();
+	void clean();
 
 private:
 	bool _b_sucess;
 	Argument *_argument_list;
+	char *_pc_usage;
 
 }; // class Parser
 } // namespace agps

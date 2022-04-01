@@ -11,7 +11,7 @@ INCLUDE		:= -I include
 LIB			:=
 LIBRARIES	:=
 
-SRCS		:= src/agps/const_str.cpp src/test.cpp #$(wildcard $(SRC)/*.$(EXTRA_NAME) $(SRC)/**/*.$(EXTRA_NAME))
+SRCS		:= $(wildcard $(SRC)/*.$(EXTRA_NAME) $(SRC)/**/*.$(EXTRA_NAME))
 OBJS		:= $(patsubst $(SRC)/%.$(EXTRA_NAME),$(BUILD)/%.o,$(SRCS))
 
 RM			:=
