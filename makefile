@@ -1,24 +1,24 @@
-# Mkf-eu v1.0
+# Mkf-eu v1.1
 CXX			:= g++
 CXX_FLAGS	:= -Wall -Werror
 EXTRA_NAME	:= cpp
 
 SRC			:= src
 BUILD		:= build
-EXECUTABLE	:= agpser.exe
+EXECUTABLE	:= test.exe
 
 INCLUDE		:= -I include 
 LIB			:=
 LIBRARIES	:=
 
-SRCS		:= $(wildcard $(SRC)/*.$(EXTRA_NAME) $(SRC)/**/*.$(EXTRA_NAME))
+SRCS		:= src/agps/const_str.cpp src/test.cpp #$(wildcard $(SRC)/*.$(EXTRA_NAME) $(SRC)/**/*.$(EXTRA_NAME))
 OBJS		:= $(patsubst $(SRC)/%.$(EXTRA_NAME),$(BUILD)/%.o,$(SRCS))
 
 RM			:=
 DIV			:=
 ifeq ($(OS),Windows_NT)
 # PLATFORM="Windows"
- RM			:= del /q /f
+ RM			:= del /s /q /f
 else
 #  PLATFORM="Unix-Like"
  RM			:= rm -f
