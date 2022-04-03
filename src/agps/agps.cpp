@@ -1,4 +1,3 @@
-// agps v0.0
 #include <agps/agps.h>
 #include <cstdio>
 #include <cstring>
