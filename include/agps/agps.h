@@ -1,9 +1,11 @@
-// agps v1.0
+// agps v1.1
 #pragma once
 #ifndef AGPS_AGPS_H
 #define AGPS_AGPS_H
 
 #include <agps/const_str.h>
+
+#include <cstdio>
 
 namespace agps {
 enum class Type { FLAG, INT, STR };
@@ -12,7 +14,7 @@ union Value {
 	int Int;
 	const char *Str;
 };
-const Value VALUE_NONE=Value{0};
+const Value VALUE_NONE = Value{0};
 class Argument {
 public:
 	Argument();
@@ -54,14 +56,13 @@ public:
 	bool isExist(char short_name) const;
 	bool isExist(const char *long_name) const;
 	const char *rest(unsigned int index);
-	// void printUsage(const char *name,FILE* fstream);
+	void printUsage(const char *name, FILE *out_stream = stdout) const;
 	void reset();
 	void clean();
 
 private:
 	bool _b_sucess;
 	Argument *_argument_list;
-	char *_pc_usage;
 	ConstStr *_rest_list;
 
 }; // class Parser

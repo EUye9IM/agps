@@ -33,7 +33,6 @@ void Argument::set(Argument *next_argument, Type type, char short_name,
 Parser::Parser() {
 	_b_sucess = false;
 	_argument_list = nullptr;
-	_pc_usage = nullptr;
 	_rest_list = nullptr;
 }
 Parser::~Parser() { reset(); }
@@ -41,6 +40,8 @@ void Parser::add(Type type, char short_name, const char *long_name,
 				 const char *infomation, bool is_necessary,
 				 const Value &default_value,
 				 bool (*check_func)(const Value &)) {
+	if (short_name == 0 && (long_name == nullptr || long_name[0] == 0))
+		return;
 	Argument *p_new_arg;
 	if (Type::FLAG == type)
 		p_new_arg =
@@ -64,11 +65,13 @@ void Parser::add(Type type, char short_name, const char *long_name,
 bool static _checkIfArgumentIsMatchRule(const char *arg, const Argument *rule) {
 	if (strlen(arg) < 2 || arg[0] != '-')
 		return false;
-	if (0 == rule->short_name || arg[1] != rule->short_name || 0 != arg[2])
-		if (nullptr == rule->long_name.cstr() || '-' != arg[1])
-			if (strcmp(arg + 2, rule->long_name.cstr()))
-				return false;
-	return true;
+	if (0 != rule->short_name && arg[1] == rule->short_name && 0 == arg[2])
+		return true;
+	if ('-' == arg[1] && nullptr != rule->long_name.cstr()) {
+		if (!strcmp(arg + 2, rule->long_name.cstr()))
+			return true;
+	}
+	return false;
 }
 void Parser::parse(int argc, const char **argv) {
 	_b_sucess = true;
@@ -176,6 +179,73 @@ bool Parser::isExist(const char *long_name) const {
 	}
 	return false;
 }
+void Parser::printUsage(const char *name, FILE *out_stream) const {
+	Argument *pointer;
+	fprintf(out_stream, "ussage : %s", name == nullptr ? "" : name);
+	pointer = _argument_list;
+	while (pointer != nullptr) {
+		if (pointer->is_necessary) {
+			if (nullptr == pointer->long_name.cstr()) {
+				switch (pointer->type) {
+				case Type::STR:
+					fprintf(out_stream, " --%s string",
+							pointer->long_name.cstr());
+					break;
+				case Type::INT:
+					fprintf(out_stream, " --%s int", pointer->long_name.cstr());
+					break;
+
+				case Type::FLAG:
+				default:
+					fprintf(out_stream, " --%s", pointer->long_name.cstr());
+					break;
+				}
+			} else {
+				switch (pointer->type) {
+				case Type::STR:
+					fprintf(out_stream, " -%c string", pointer->short_name);
+					break;
+				case Type::INT:
+					fprintf(out_stream, " -%c int", pointer->short_name);
+					break;
+
+				case Type::FLAG:
+				default:
+					fprintf(out_stream, " -%c", pointer->short_name);
+					break;
+				}
+			}
+		}
+		pointer = pointer->next_argument;
+	}
+	fprintf(out_stream, " [options] ...\noptions :\n");
+	pointer = _argument_list;
+	while (pointer != nullptr) {
+		if (0 != pointer->short_name)
+			fprintf(out_stream, "\t-%c", pointer->short_name);
+		else
+			fprintf(out_stream, "\t");
+		if (nullptr != pointer->long_name.cstr() &&
+			pointer->long_name.cstr()[0] != 0)
+			fprintf(out_stream, "\t--%s", pointer->long_name.cstr());
+		switch (pointer->type) {
+		case Type::STR:
+			fprintf(out_stream, "\t\t[ string ]");
+			break;
+		case Type::INT:
+			fprintf(out_stream, "\t\t[ int ]");
+			break;
+		default:
+			break;
+		}
+
+		if (nullptr != pointer->infomation.cstr() &&
+			pointer->infomation.cstr()[0] != 0)
+			fprintf(out_stream, "\n\t\t\t\t%s\n", pointer->infomation.cstr());
+		pointer = pointer->next_argument;
+	}
+	return;
+}
 void Parser::reset() {
 	Argument *head = _argument_list;
 	if (_rest_list != nullptr)
@@ -186,7 +256,6 @@ void Parser::reset() {
 		head = _argument_list;
 	}
 	_b_sucess = false;
-	_pc_usage = nullptr;
 	_rest_list = nullptr;
 	return;
 }
@@ -198,7 +267,6 @@ void Parser::clean() {
 		pointer = pointer->next_argument;
 	}
 	_b_sucess = false;
-	_pc_usage = nullptr;
 	_rest_list = nullptr;
 	return;
 }

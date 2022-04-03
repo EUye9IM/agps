@@ -40,7 +40,7 @@ int main(int argc, const char **argv) {
 		   });
 	pa.parse(argc, argv);
 	if (!pa.success()) {
-		cout << "faild." << endl;
+		pa.printUsage(argv[0]);
 		return 0;
 	} else
 		cout << "success." << endl;
