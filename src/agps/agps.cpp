@@ -185,7 +185,7 @@ void Parser::printUsage(const char *name, FILE *out_stream) const {
 	pointer = _argument_list;
 	while (pointer != nullptr) {
 		if (pointer->is_necessary) {
-			if (nullptr == pointer->long_name.cstr()) {
+			if (nullptr != pointer->long_name.cstr()) {
 				switch (pointer->type) {
 				case Type::STR:
 					fprintf(out_stream, " --%s string",
