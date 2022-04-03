@@ -22,5 +22,5 @@ void ConstStr::set(const char *str) {
 	}
 	return;
 }
-const char *ConstStr::cstr() { return (const char *)(_str_pointer); }
+const char *ConstStr::cstr() const { return (const char *)(_str_pointer); }
 } // namespace agps

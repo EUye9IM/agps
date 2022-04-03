@@ -8,7 +8,7 @@ public:
 	ConstStr(const char *str);
 	~ConstStr();
 	void set(const char *str);
-	const char *cstr();
+	const char *cstr() const;
 
 private:
 	char *_str_pointer;
