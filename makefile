@@ -1,4 +1,4 @@
-# Mkf-eu v1.1
+# Mkf-eu v1.2
 CXX			:= g++
 CXX_FLAGS	:= -Wall -Werror
 EXTRA_NAME	:= cpp
@@ -21,7 +21,7 @@ ifeq ($(OS),Windows_NT)
  RM			:= del /s /q /f
 else
 #  PLATFORM="Unix-Like"
- RM			:= rm -f
+ RM			:= rm -rf
 endif
 
 
