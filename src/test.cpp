@@ -31,10 +31,10 @@ int main(int argc, const char **argv) {
 	pa.add(Type::FLAG, 0, "flag", "this is flag");
 	pa.add(Type::INT, 0, "int-1", "this is int1");
 	pa.add(Type::INT, 0, "int-2", "this is int2", false, VALUE_NONE,
-		   [](const Value &val) -> bool { return val.Int >= 0; });
+		   [](Value val) -> bool { return val.Int >= 0; });
 	pa.add(Type::STR, 0, "s-1", "this is s", false);
 	pa.add(Type::STR, 0, "s-2", "this is s2", true, VALUE_NONE,
-		   [](const Value &val) -> bool {
+		   [](Value val) -> bool {
 			   return !(stricmp(val.Str, "yes") && stricmp(val.Str, "y") &&
 						stricmp(val.Str, "no") && stricmp(val.Str, "n"));
 		   });

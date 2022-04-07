@@ -20,11 +20,11 @@ public:
 	Argument();
 	Argument(Argument *next_argument, Type type, char short_name,
 			 const char *long_name, const char *infomation, bool is_necessary,
-			 const Value &default_value, bool (*check_func)(const Value &),
+			 const Value &default_value, bool (*check_func)(Value),
 			 bool is_exist, const Value &real_valuel);
 	void set(Argument *next_argument, Type type, char short_name,
 			 const char *long_name, const char *infomation, bool is_necessary,
-			 const Value &default_value, bool (*check_func)(const Value &),
+			 const Value &default_value, bool (*check_func)(Value),
 			 bool is_exist, const Value &real_valuel);
 	Type type;
 	char short_name;
@@ -32,7 +32,7 @@ public:
 	ConstStr infomation;
 	bool is_necessary;
 	Value default_value;
-	bool (*check_func)(const Value &);
+	bool (*check_func)(Value);
 	Argument *next_argument;
 
 	bool is_exist;
@@ -48,14 +48,14 @@ public:
 	void add(Type type, char short_name, const char *long_name,
 			 const char *infomation, bool is_necessary = true,
 			 const Value &default_value = VALUE_NONE,
-			 bool (*check_func)(const Value &) = nullptr);
+			 bool (*check_func)(Value) = nullptr);
 	void parse(int argc, const char **argv);
 	bool success() const;
 	Value get(char short_name) const;
 	Value get(const char *long_name) const;
 	bool isExist(char short_name) const;
 	bool isExist(const char *long_name) const;
-	const char *rest(unsigned int index);
+	//const char *rest(unsigned int index);
 	void printUsage(const char *name, FILE *out_stream = stdout) const;
 	void reset();
 	void clean();

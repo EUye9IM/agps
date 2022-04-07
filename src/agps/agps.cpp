@@ -9,7 +9,7 @@ Argument::Argument() {
 Argument::Argument(Argument *next_argument, Type type, char short_name,
 				   const char *long_name, const char *infomation,
 				   bool is_necessary, const Value &default_value,
-				   bool (*check_func)(const Value &), bool is_exist,
+				   bool (*check_func)(Value), bool is_exist,
 				   const Value &real_value) {
 	set(next_argument, type, short_name, long_name, infomation, is_necessary,
 		default_value, check_func, is_exist, real_value);
@@ -17,7 +17,7 @@ Argument::Argument(Argument *next_argument, Type type, char short_name,
 void Argument::set(Argument *next_argument, Type type, char short_name,
 				   const char *long_name, const char *infomation,
 				   bool is_necessary, const Value &default_value,
-				   bool (*check_func)(const Value &), bool is_exist,
+				   bool (*check_func)(Value), bool is_exist,
 				   const Value &real_value) {
 	this->type = type;
 	this->short_name = short_name;
@@ -39,7 +39,7 @@ Parser::~Parser() { reset(); }
 void Parser::add(Type type, char short_name, const char *long_name,
 				 const char *infomation, bool is_necessary,
 				 const Value &default_value,
-				 bool (*check_func)(const Value &)) {
+				 bool (*check_func)(Value)) {
 	if (short_name == 0 && (long_name == nullptr || long_name[0] == 0))
 		return;
 	Argument *p_new_arg;
