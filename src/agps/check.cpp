@@ -1,8 +1,20 @@
 #include <agps/agps.h>
 #include <agps/check.h>
 
+#include <cctype>
 #include <cstdio>
 #include <cstring>
+
+static char *strlwr(char *str) {
+	unsigned char *p = (unsigned char *)str;
+
+	while (*p) {
+		*p = tolower((unsigned char)*p);
+		p++;
+	}
+
+	return str;
+}
 namespace agps {
 bool _checkStrVerify(agps::Value val) {
 	if (!val.Str)
@@ -14,7 +26,7 @@ bool _checkStrVerify_Y(agps::Value val) {
 		return false;
 	char *temp = new char[strlen(val.Str)];
 	strcpy(temp, val.Str);
-	strlwr(temp);
+	__strlwr(temp);
 	bool ans = !strcmp(temp, "yes") || !strcmp(temp, "y");
 	delete[] temp;
 	return ans;
@@ -24,7 +36,7 @@ bool _checkStrVerify_N(agps::Value val) {
 		return false;
 	char *temp = new char[strlen(val.Str)];
 	strcpy(temp, val.Str);
-	strlwr(temp);
+	__strlwr(temp);
 	bool ans = !strcmp(temp, "no") || !strcmp(temp, "n");
 	delete[] temp;
 	return ans;
