@@ -5,20 +5,26 @@
 #include <cstring>
 namespace agps {
 bool _checkStrVerify(agps::Value val) {
+	if (val.Str)
+		return false;
 	return _checkStrVerify_Y(val) || _checkStrVerify_N(val);
 }
 bool _checkStrVerify_Y(agps::Value val) {
+	if (val.Str)
+		return false;
 	char *temp = new char[strlen(val.Str)];
-	strcpy(temp,val.Str);
+	strcpy(temp, val.Str);
 	strlwr(temp);
-	printf("%s\n",temp);
+	printf("%s\n", temp);
 	bool ans = !strcmp(temp, "yes") || !strcmp(temp, "y");
 	delete[] temp;
 	return ans;
 }
 bool _checkStrVerify_N(agps::Value val) {
+	if (val.Str)
+		return false;
 	char *temp = new char[strlen(val.Str)];
-	strcpy(temp,val.Str);
+	strcpy(temp, val.Str);
 	strlwr(temp);
 	bool ans = !strcmp(temp, "no") || !strcmp(temp, "n");
 	delete[] temp;
@@ -26,6 +32,8 @@ bool _checkStrVerify_N(agps::Value val) {
 }
 
 bool _checkStrIpaddr(agps::Value val) {
+	if (val.Str)
+		return false;
 	int a, b, c, d;
 	char e;
 	if (4 == sscanf(val.Str, "%d.%d.%d.%d%c", &a, &b, &c, &d, &e)) {

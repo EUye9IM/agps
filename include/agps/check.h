@@ -20,6 +20,8 @@ bool _checkStrIpaddr(agps::Value val);
 #ifndef CHECK_STR_IN
 #define CHECK_STR_IN(...)                                                      \
 	[](agps::Value val) {                                                      \
+		if (!val.Str)                                                          \
+			return false;                                                      \
 		const char *_str_list[] = {__VA_ARGS__, NULL};                         \
 		for (int i = 0; _str_list[i]; i++) {                                   \
 			if (!strcmp(val.Str, _str_list[i]))                                \

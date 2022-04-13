@@ -1,4 +1,4 @@
-// agps v1.1
+// agps v1.2
 #pragma once
 #ifndef AGPS_AGPS_H
 #define AGPS_AGPS_H
