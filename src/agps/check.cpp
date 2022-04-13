@@ -1,0 +1,38 @@
+#include <agps/agps.h>
+#include <agps/check.h>
+
+#include <cstdio>
+#include <cstring>
+namespace agps {
+bool _checkStrVerify(agps::Value val) {
+	return _checkStrVerify_Y(val) || _checkStrVerify_N(val);
+}
+bool _checkStrVerify_Y(agps::Value val) {
+	char *temp = new char[strlen(val.Str)];
+	strcpy(temp,val.Str);
+	strlwr(temp);
+	printf("%s\n",temp);
+	bool ans = !strcmp(temp, "yes") || !strcmp(temp, "y");
+	delete[] temp;
+	return ans;
+}
+bool _checkStrVerify_N(agps::Value val) {
+	char *temp = new char[strlen(val.Str)];
+	strcpy(temp,val.Str);
+	strlwr(temp);
+	bool ans = !strcmp(temp, "no") || !strcmp(temp, "n");
+	delete[] temp;
+	return ans;
+}
+
+bool _checkStrIpaddr(agps::Value val) {
+	int a, b, c, d;
+	char e;
+	if (4 == sscanf(val.Str, "%d.%d.%d.%d%c", &a, &b, &c, &d, &e)) {
+		if (0 <= a && a <= 255 && 0 <= b && b <= 255 && 0 <= c && c <= 255 &&
+			0 <= d && d <= 255)
+			return true;
+	}
+	return false;
+}
+} // namespace agps
