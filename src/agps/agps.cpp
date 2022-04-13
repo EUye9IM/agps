@@ -96,7 +96,8 @@ void Parser::parse(int argc, const char **argv) {
 						}
 						the_arg = argv[pos];
 						int ret, val;
-						ret = sscanf(the_arg, "%d", &val);
+						char c;
+						ret = sscanf(the_arg, "%d%c", &val,&c);
 						if (1 != ret)
 							_b_sucess = false;
 						else

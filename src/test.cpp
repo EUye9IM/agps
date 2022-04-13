@@ -30,7 +30,7 @@ int main(int argc, const char **argv) {
 	// }
 	Parser pa;
 	pa.add(Type::INT,'i',NULL,NULL,false,Value{.Int=5},CHECK_INT_BETWEEN(0,10));
-	pa.add(Type::STR,'s',NULL,NULL,false,Value{.Str="no"},CHECK_STR_IPADDR);
+	pa.add(Type::STR,'s',NULL,NULL,false,Value{.Str="no"},CHECK_STR_VERIFY);
 	pa.parse(argc, argv);
 	if (!pa.success()) {
 		pa.printUsage(argv[0]);
