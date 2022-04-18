@@ -55,7 +55,8 @@ public:
 	Value get(const char *long_name) const;
 	bool isExist(char short_name) const;
 	bool isExist(const char *long_name) const;
-	//const char *rest(unsigned int index);
+	const char *rest(int index);
+	int restCnt();
 	void printUsage(const char *name, FILE *out_stream = stdout) const;
 	void reset();
 	void clean();
@@ -63,8 +64,9 @@ public:
 private:
 	bool _b_sucess;
 	Argument *_argument_list;
-	ConstStr *_rest_list;
-
+	ConstStr *_raw_list;
+	int *_rest_index;
+	int _rest_num;
 }; // class Parser
 } // namespace agps
 
