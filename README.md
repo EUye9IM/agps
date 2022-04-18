@@ -37,9 +37,3 @@ a parser to parse arguments
 - Parser::clean() 清空解析器
 
 详情可看 test.cpp
-
-## 代办
-
-1. 将解析过的参数保存以免原字符串改变
-2. 获取剩余参数
-3. 重载 get 使能够直接通过引用获得值

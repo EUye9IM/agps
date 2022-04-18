@@ -1,7 +1,7 @@
 #include <agps/agps.h>
+#include <agps/check.h>
 #include <cstring>
 #include <iostream>
-#include <agps/check.h>
 using namespace std;
 using namespace agps;
 void static pri(Parser &p, Type t, const char *n) {
@@ -24,36 +24,18 @@ void static pri(Parser &p, Type t, const char *n) {
 	}
 }
 int main(int argc, const char **argv) {
-	// cout << argc << endl;
-	// for (int i = 0; i < argc; i++) {
-	// 	cout << argv[i] << endl;
-	// }
 	Parser pa;
-	pa.add(Type::INT,'i',NULL,NULL,false,Value{.Int=5},CHECK_INT_BETWEEN(0,10));
-	pa.add(Type::STR,'s',NULL,NULL,false,Value{.Str="no"},CHECK_STR_VERIFY);
-	pa.parse(argc, argv);
-	if (!pa.success()) {
-		pa.printUsage(argv[0]);
-		return 0;
-	} else
-		cout << "success." << endl;
-	cout << pa.get('i').Int<<endl;
-	cout << pa.get('s').Str <<endl;
-	cout << CHECK_STR_VERIFY_Y(pa.get('s'))<<endl;
-	return 0;
 	pa.add(Type::FLAG, 0, "flag", "this is flag");
 	pa.add(Type::INT, 0, "int-1", "this is int1");
 	pa.add(Type::INT, 0, "int-2", "this is int2", false, VALUE_NONE,
-		   [](Value val) -> bool { return val.Int >= 0; });
-	pa.add(Type::STR, 0, "s-1", "this is s", false);
+		   CHECK_INT_BETWEEN(0, 99));
+	pa.add(Type::STR, 's', "s-1", "this is s", false);
 	pa.add(Type::STR, 0, "s-2", "this is s2", true, VALUE_NONE,
-		   [](Value val) -> bool {
-			   return !(stricmp(val.Str, "yes") && stricmp(val.Str, "y") &&
-						stricmp(val.Str, "no") && stricmp(val.Str, "n"));
-		   });
+		   CHECK_STR_VERIFY);
 	pa.parse(argc, argv);
 	if (!pa.success()) {
 		pa.printUsage(argv[0]);
+		cout << "faild." << endl;
 		return 0;
 	} else
 		cout << "success." << endl;
@@ -62,8 +44,13 @@ int main(int argc, const char **argv) {
 		 << "val" << endl;
 	pri(pa, Type::FLAG, "flag");
 	pri(pa, Type::INT, "int-1");
-	pri(pa, Type::INT,"int-2");
-	pri(pa, Type::STR,"s-1");
+	pri(pa, Type::INT, "int-2");
+	pri(pa, Type::STR, "s-1");
 	pri(pa, Type::STR, "s-2");
+
+	cout << pa.restCnt() << endl;
+	for (int i = 0; i < pa.restCnt(); i++) {
+		cout << pa.rest(i) << endl;
+	}
 	return 0;
 }
