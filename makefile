@@ -5,7 +5,7 @@ EXTRA_NAME	:= cpp
 
 SRC			:= src
 BUILD		:= build
-EXECUTABLE	:= test.exe
+EXECUTABLE	:= test
 
 INCLUDE		:= -I include 
 LIB			:=

@@ -85,7 +85,7 @@ static void _err_missing(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("' is missing a value.\n");
@@ -95,7 +95,7 @@ static void _err_type_int(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("' requires an integer value.\n");
@@ -105,7 +105,7 @@ static void _err_unexpect(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("'.\n");
@@ -115,7 +115,7 @@ static void _err_invalid(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("' received an invalid value.\n");
@@ -125,7 +125,7 @@ static void _err_required(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("' required but not exist.\n");
@@ -140,7 +140,7 @@ static void _err_multiple(ConstStr &err, const Argument *arg) {
 	if ((nullptr != arg->long_name.cstr() && arg->long_name.cstr()[0] != 0))
 		err.append(arg->long_name.cstr());
 	else {
-		char k[2] = {arg->short_name, NULL};
+		char k[2] = {arg->short_name, char(0)};
 		err.append(k);
 	}
 	err.append("' is setted multiple times.\n");
