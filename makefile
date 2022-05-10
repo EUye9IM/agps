@@ -1,4 +1,4 @@
-# Mkf-eu v1.2
+# Mkf-eu v1.3
 CXX			:= g++
 CXX_FLAGS	:= -Wall -Werror
 EXTRA_NAME	:= cpp
@@ -36,7 +36,13 @@ $(EXECUTABLE):$(OBJS)
 
 $(BUILD)/%.o: $(SRC)/%.$(EXTRA_NAME)
 	@echo Compiling $@
+ifeq ($(OS),Windows_NT)
+# PLATFORM="Windows"
 	@if not exist $(dir $@) mkdir "$(dir $@)"
+else
+#  PLATFORM="Unix-Like"
+	@mkdir -p $(dir $@)
+endif
 	@$(CXX) $(CXX_FLAGS) $(INCLUDE) -c $< -o $@
 
 .PHONY: clean
